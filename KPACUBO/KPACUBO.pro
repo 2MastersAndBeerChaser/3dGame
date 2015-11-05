@@ -15,11 +15,26 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-    cavegenerator.cpp \
-    roomgenerator.cpp
+    Generators/cavegenerator.cpp \
+    Generators/roomgenerator.cpp \
+    gameapplication.cpp \
+    UI/window3d.cpp \
+    Nodes/cavewall.cpp \
+    GL/basescene.cpp \
+    GL/glhelper.cpp \
+    GL/scenecamera.cpp \
+    GL/scenenode.cpp
 
 HEADERS  += \
-    cavegenerator.h \
-    roomgenerator.h
+    Generators/cavegenerator.h \
+    Generators/roomgenerator.h \
+    gameapplication.h \
+    UI/window3d.h \
+    Nodes/cavewall.h \
+    GL/basescene.h \
+    GL/glhelper.h \
+    GL/scenecamera.h \
+    GL/scenenode.h \
+    Generators/generators.h
 
-FORMS    += mainwindow.ui
+FORMS    +=

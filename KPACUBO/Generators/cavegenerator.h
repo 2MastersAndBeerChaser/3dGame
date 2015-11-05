@@ -2,6 +2,7 @@
 #define CAVEGENERATOR_H
 #include <vector>
 #include <QTime>
+#include <qdebug.h>
 
 class CaveGenerator
 {

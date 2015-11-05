@@ -1,11 +1,13 @@
-#include <QApplication>
-#include "cavegenerator.h"
+#include <gameapplication.h>
+#include <Generators/roomgenerator.h>
 
 int main(int argc, char *argv[])
 {
     qsrand(QTime::currentTime().msec());
-    //QApplication a(argc, argv);
-    CaveGenerator cgen(95, 95, 10);
-    std::vector<std::vector<int> > vec = cgen.GetCaveMap();
-    return 0;
+//    CaveGenerator cgen(95, 95, 10);
+//    std::vector<std::vector<int> > vec = cgen.GetCaveMap();
+    RoomGenerator rgen(50, 50);
+    rgen.GetCaveMap();
+    GameApplication a(argc, argv);
+    return a.enterGameLoop();
 }

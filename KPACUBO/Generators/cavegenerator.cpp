@@ -1,5 +1,4 @@
 #include "cavegenerator.h"
-#include <qdebug.h>
 
 CaveGenerator::CaveGenerator(int width, int height, int simulationSteps, double initChance, int birthLimit, int deathLimit)
     : m_initialChance(initChance),
@@ -53,9 +52,9 @@ void CaveGenerator::DoSimulationStep()
 {
     std::vector<std::vector<int> > newMap = m_map;
     m_beenSimulated = false;
-    for (int x = 0; x < m_map.size(); x++)
+    for (int x = 0; x < m_width; x++)
     {
-        for (int y = 0; y < m_map[0].size(); y++)
+        for (int y = 0; y < m_height; y++)
         {
             int numberOfNeighbours = CountAliveNeighbours(x, y);
             if (m_map[x][y] == 1)
@@ -94,7 +93,7 @@ int CaveGenerator::CountAliveNeighbours(int x, int y)
             {
                 int neiX = x + i;
                 int neiY = y + j;
-                if (neiX < 0 || neiY < 0 || neiX >= m_map.size() || neiY >= m_map[0].size())
+                if (neiX < 0 || neiY < 0 || neiX >= m_width || neiY >= m_height)
                 {
                     count++;
                 }
@@ -110,10 +109,10 @@ int CaveGenerator::CountAliveNeighbours(int x, int y)
 
 void CaveGenerator::ToDebug()
 {
-    for (int i = 0; i < m_map.size(); i++)
+    for (int i = 0; i < m_width; i++)
     {
         QString s = "";
-        for (int j = 0; j < m_map[0].size(); j++)
+        for (int j = 0; j < m_height; j++)
         {
             s += QString::number(m_map[i][j]);
         }
