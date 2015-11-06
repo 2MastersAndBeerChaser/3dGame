@@ -4,12 +4,12 @@
 #include "glhelper.h"
 
 static float Z_NEAR = 0.02;
-static float Z_FAR = 50.0;
+static float Z_FAR = 100.0;
 
 BaseScene::BaseScene(QSize viewportSize)
     : SceneNode()
     , m_camera(viewportSize)
-    , m_clearColor(Qt::white)
+    , m_clearColor(Qt::black)
 {
 }
 

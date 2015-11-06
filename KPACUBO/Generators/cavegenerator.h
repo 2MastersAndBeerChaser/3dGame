@@ -1,5 +1,4 @@
-#ifndef CAVEGENERATOR_H
-#define CAVEGENERATOR_H
+#pragma once
 #include <vector>
 #include <QTime>
 #include <qdebug.h>
@@ -24,5 +23,3 @@ private:
     bool m_beenSimulated;
     int m_simulationSteps;
 };
-
-#endif // CAVEGENERATOR_H

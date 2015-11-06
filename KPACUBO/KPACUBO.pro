@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     GL/basescene.cpp \
     GL/glhelper.cpp \
     GL/scenecamera.cpp \
-    GL/scenenode.cpp
+    GL/scenenode.cpp \
+    Characters/player.cpp
 
 HEADERS  += \
     Generators/cavegenerator.h \
@@ -35,6 +36,7 @@ HEADERS  += \
     GL/glhelper.h \
     GL/scenecamera.h \
     GL/scenenode.h \
-    Generators/generators.h
+    Generators/generators.h \
+    Characters/player.h
 
 FORMS    +=

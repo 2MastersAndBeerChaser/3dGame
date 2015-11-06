@@ -176,6 +176,14 @@ void Window3D::keyPressEvent(QKeyEvent *event)
         {
             scene.camera().setSpeed(QVector3D(0, -5, 0));
         }
+        if (event->key() == Qt::Key_Up)
+        {
+            scene.camera().setSpeed(QVector3D(5, 0, 0));
+        }
+        if (event->key() == Qt::Key_Down)
+        {
+            scene.camera().setSpeed(QVector3D(-5, 0, 0));
+        }
     }
 }
 
@@ -197,6 +205,14 @@ void Window3D::keyReleaseEvent(QKeyEvent *event)
             scene.camera().setSpeed(QVector3D(0, 0, 0));
         }
         if (event->key() == Qt::Key_D)
+        {
+            scene.camera().setSpeed(QVector3D(0, 0, 0));
+        }
+        if (event->key() == Qt::Key_Up)
+        {
+            scene.camera().setSpeed(QVector3D(0, 0, 0));
+        }
+        if (event->key() == Qt::Key_Down)
         {
             scene.camera().setSpeed(QVector3D(0, 0, 0));
         }

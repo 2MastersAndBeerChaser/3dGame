@@ -1,5 +1,4 @@
-#ifndef ROOMGENERATOR_H
-#define ROOMGENERATOR_H
+#pragma once
 #include <vector>
 #include <QTime>
 #include <qdebug.h>
@@ -33,5 +32,3 @@ private:
     int m_minRoomSize;
     std::vector<Room> m_rooms;
 };
-
-#endif // ROOMGENERATOR_H

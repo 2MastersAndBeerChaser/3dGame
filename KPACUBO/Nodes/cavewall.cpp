@@ -65,7 +65,7 @@ void ColoredCube::drawOpenGLCube(bool showWired)
     glVertexPointer(3, GL_FLOAT, sizeof(SimpleVertex), &vertices[0].pos);
 
     // и массиве цветов
-    glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SimpleVertex), &vertices[1].color);
+    glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SimpleVertex), &vertices[0].color);
 
     // Разрешаем использование массива координат вершин и цветов
     glEnableClientState(GL_VERTEX_ARRAY);
