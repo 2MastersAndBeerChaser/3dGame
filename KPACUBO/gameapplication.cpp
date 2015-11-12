@@ -23,6 +23,8 @@ void GameApplication::loadScene()
     disconnect(&m_window, SIGNAL(activeChanged()), this, SLOT(loadScene()));
     CaveGenerator cgen(50, 50, 10);
     m_map = cgen.GetCaveMap();
+    ObjectsGenerator ogen(m_map);
+    m_map = ogen.GenerateObj();
 
     auto scene = std::make_shared<BaseScene>();
     scene->camera().setViewport(m_window.size());
@@ -37,11 +39,15 @@ void GameApplication::loadScene()
         {
             if (m_map[i][j] == 0)
             {
-                new ColoredCube(scene.get(), {x, 0, z}, ColoredCube::CaveGround);
+                new ColoredCube(scene.get(), {x, 0, z}, ColoredCube::WallType::CaveGround);
             }
-            else
+            else if (m_map[i][j] == 1)
             {
-                new ColoredCube(scene.get(), {x, 0, z}, ColoredCube::CaveWall);
+                new ColoredCube(scene.get(), {x, 0, z}, ColoredCube::WallType::CaveWall);
+            }
+            else if (m_map[i][j] == 2)
+            {
+                new ColoredCube(scene.get(), {x, 0, z}, ColoredCube::WallType::RoomGround);
             }
         }
     }
