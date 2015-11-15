@@ -28,9 +28,9 @@ void GameApplication::loadScene()
     ObjectsGenerator ogen(m_map);
     m_map = ogen.GenerateObj();
 
-    auto scene = std::make_shared<BaseScene>();
+    std::shared_ptr<BaseScene> scene = std::make_shared<BaseScene>();
     scene->camera().setViewport(m_window.size());
-    scene->camera().lookAt(QVector3D(0, 300, -10), QVector3D(0, 0, 0), QVector3D(0, 0, 1));
+    //scene->camera().lookAt(QVector3D(0, 300, -10), QVector3D(0, 0, 0), QVector3D(0, 0, 1));
 
     new ColoredCube(scene.get(), {0, 0, 0}, ColoredCube::WallType::CaveGround);
 
@@ -51,6 +51,10 @@ void GameApplication::loadScene()
             }
         }
     }
+
+    scene->setPlayer(m_player);
+    auto pos = m_player->GetCoords();
+    scene->camera().lookAt(QVector3D(pos.x(), 150, pos.y() - 75), QVector3D(pos.x(), 50, pos.y()), QVector3D(0, 0, 1));
 
     m_window.pushScene(scene);
 }

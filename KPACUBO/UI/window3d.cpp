@@ -159,22 +159,27 @@ void Window3D::keyPressEvent(QKeyEvent *event)
 {
     if (!m_sceneStack.empty())
     {
-        auto &scene = (*m_sceneStack.back());
+        BaseScene &scene = (*m_sceneStack.back());
+        QVector2D pos = scene.player()->GetCoords();
         if (event->key() == Qt::Key_W)
         {
-            scene.camera().setSpeed(QVector3D(0, 0, 50));
+            scene.player()->SetCoords(QVector2D(pos.x(), pos.y() + 5));
+            scene.camera().lookAt(QVector3D(pos.x(), 150, pos.y() - 75), QVector3D(pos.x(), 50, pos.y()), QVector3D(0, 0, 1));
         }
         if (event->key() == Qt::Key_S)
         {
-            scene.camera().setSpeed(QVector3D(0, 0, -50));
+            scene.player()->SetCoords(QVector2D(pos.x(), pos.y() - 5));
+            scene.camera().lookAt(QVector3D(pos.x(), 150, pos.y() - 75), QVector3D(pos.x(), 50, pos.y()), QVector3D(0, 0, 1));
         }
         if (event->key() == Qt::Key_A)
         {
-            scene.camera().setSpeed(QVector3D(0, 50, 0));
+            scene.player()->SetCoords(QVector2D(pos.x() + 5, pos.y()));
+            scene.camera().lookAt(QVector3D(pos.x(), 150, pos.y() - 75), QVector3D(pos.x(), 50, pos.y()), QVector3D(0, 0, 1));
         }
         if (event->key() == Qt::Key_D)
         {
-            scene.camera().setSpeed(QVector3D(0, -50, 0));
+            scene.player()->SetCoords(QVector2D(pos.x() - 5, pos.y()));
+            scene.camera().lookAt(QVector3D(pos.x(), 150, pos.y() - 75), QVector3D(pos.x(), 50, pos.y()), QVector3D(0, 0, 1));
         }
         if (event->key() == Qt::Key_Up)
         {

@@ -2,6 +2,7 @@
 
 #include "scenenode.h"
 #include "scenecamera.h"
+#include "../Nodes/playernode.h"
 #include <QColor>
 
 class BaseScene : public SceneNode
@@ -16,6 +17,7 @@ public:
     void setClearColor(const QColor &clearColor);
 
     void setViewport(QSize viewport);
+    void setPlayer(PlayerNode *player);
     void advance(int64_t msec) override;
     void render(QPainter &painter) override;
     void onPush();
@@ -23,9 +25,10 @@ public:
 
     SceneCamera &camera();
     SceneCamera const& camera() const;
+    PlayerNode* player() const;
 
 private:
     SceneCamera m_camera;
     QColor m_clearColor;
-
+    PlayerNode *m_player;
 };

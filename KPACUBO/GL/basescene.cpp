@@ -11,6 +11,7 @@ BaseScene::BaseScene(QSize viewportSize)
     : SceneNode()
     , m_camera(viewportSize)
     , m_clearColor(Qt::black)
+    , m_player(nullptr)
 {
 }
 
@@ -38,6 +39,11 @@ void BaseScene::setViewport(QSize viewport)
 
     m_camera.setViewport(viewport);
     GLHelper::dumpIfError();
+}
+
+void BaseScene::setPlayer(PlayerNode *player)
+{
+    m_player = player;
 }
 
 void BaseScene::advance(int64_t msec)
@@ -83,5 +89,10 @@ SceneCamera &BaseScene::camera()
 const SceneCamera &BaseScene::camera() const
 {
     return m_camera;
+}
+
+PlayerNode *BaseScene::player() const
+{
+    return m_player;
 }
 
