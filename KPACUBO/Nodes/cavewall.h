@@ -2,6 +2,7 @@
 
 #include "../GL/scenenode.h"
 #include <qopengl.h>
+#include "globals.h"
 
 class ColoredCube : public SceneNode
 {

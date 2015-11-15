@@ -3,7 +3,6 @@
 #include "../GL/scenenode.h"
 #include <qopengl.h>
 #include <QVector2D>
-#include <QKeyEvent>
 
 class PlayerNode : public SceneNode
 {
@@ -26,19 +25,17 @@ public:
 
     PlayerNode(SceneNode *parent, QVector2D coord);
     PlayerNode();
-    void SetCoords(QVector2D coord);
+    void SetMove(float dx, float dy);
     QVector2D GetCoords() const;
+    void SetSpeed(QVector2D vecSpeed);
     void drawOpenGLCube(bool showWired);
     void advance(int64_t msec) override;
     void render(QPainter &painter) override;
-
-protected:
-    virtual void keyPressEvent(QKeyEvent *) ;
-    virtual void keyReleaseEvent(QKeyEvent *) ;
 
 private:
     QVector2D m_coord;
     Color4 m_color;
     int m_height;
     const int LEN = 2;
+    QVector2D m_speed;
 };

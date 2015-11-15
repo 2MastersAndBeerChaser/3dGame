@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <QTime>
+#include "globals.h"
 
 class ObjectsGenerator
 {
@@ -19,16 +20,17 @@ public:
 private:
     struct Coord
     {
-        int x;
-        int y;
+        size_t x;
+        size_t y;
     };
 
     void GenEnterance();
     void GenExit();
     void GenTreasure();
     void GenEnemies();
-    void GFreeSpace(std::vector<Coord> & coords, Coord lt, Coord rb);
+    void GetFreeCells(Coord lt, Coord rb);
 
     std::vector<std::vector<int> > m_map;
     Orientation m_or;
+    std::vector<Coord> m_freeCells;
 };

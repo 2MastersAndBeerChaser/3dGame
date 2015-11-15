@@ -2,6 +2,7 @@
 #include <QResizeEvent>
 #include <QPainter>
 #include <QGuiApplication>
+#include "globals.h"
 
 Window3D::Window3D(QWindow *parent)
     : QWindow(parent)
@@ -81,6 +82,7 @@ void Window3D::deferRender()
 
 void Window3D::render()
 {
+    HandleMutliKeyPress();
     if (!m_canRender)
     {
         return;
@@ -141,7 +143,44 @@ void Window3D::updateScene(BaseScene &scene)
     });
 }
 
-void Window3D::mouseMoveEvent(QMouseEvent *event)
+void Window3D::HandleMutliKeyPress()
+{
+    if (!m_sceneStack.empty())
+    {
+        BaseScene &scene = (*m_sceneStack.back());
+        QVector2D pos = scene.player()->GetCoords();
+        float dx = 0;
+        float dy = 0;
+        if (m_pressedKeys.contains(Qt::Key_W))
+        {
+            dy += 0.5;
+        }
+        if (m_pressedKeys.contains(Qt::Key_S))
+        {
+            dy -= 0.5;
+        }
+        if (m_pressedKeys.contains(Qt::Key_A))
+        {
+            dx += 0.5;
+        }
+        if (m_pressedKeys.contains(Qt::Key_D))
+        {
+            dx -= 0.5;
+        }
+
+        scene.player()->SetMove(dx, dy);
+        pos = scene.player()->GetCoords();
+        QVector2D posExit = scene.exit()->GetCoords();
+        if (pos.y() >= posExit.y() && pos.y() <= posExit.y() + WALL_LEN
+                && pos.x() >= posExit.x() && pos.x() <= posExit.x() + WALL_LEN)
+        {
+            emit Window3D::ExitReached();
+        }
+        scene.camera().lookAt(QVector3D(pos.x(), CAM_UP, pos.y() - CAM_RANGE), QVector3D(pos.x(), CAM_UP_ANGLE, pos.y()), QVector3D(0, 0, 1));
+    }
+}
+
+void Window3D::mouseMoveEvent(QMouseEvent *)
 {
 //    if (!m_sceneStack.empty())
 //    {
@@ -152,74 +191,15 @@ void Window3D::mouseMoveEvent(QMouseEvent *event)
 //                              QVector3D(0, 0, 1));
 //        auto w = scene.camera().eye();
 //        int u = 3;
-//    }
-}
-
-void Window3D::keyPressEvent(QKeyEvent *event)
-{
-    if (!m_sceneStack.empty())
-    {
-        BaseScene &scene = (*m_sceneStack.back());
-        QVector2D pos = scene.player()->GetCoords();
-        if (event->key() == Qt::Key_W)
-        {
-            scene.player()->SetCoords(QVector2D(pos.x(), pos.y() + 5));
-            scene.camera().lookAt(QVector3D(pos.x(), 150, pos.y() - 75), QVector3D(pos.x(), 50, pos.y()), QVector3D(0, 0, 1));
-        }
-        if (event->key() == Qt::Key_S)
-        {
-            scene.player()->SetCoords(QVector2D(pos.x(), pos.y() - 5));
-            scene.camera().lookAt(QVector3D(pos.x(), 150, pos.y() - 75), QVector3D(pos.x(), 50, pos.y()), QVector3D(0, 0, 1));
-        }
-        if (event->key() == Qt::Key_A)
-        {
-            scene.player()->SetCoords(QVector2D(pos.x() + 5, pos.y()));
-            scene.camera().lookAt(QVector3D(pos.x(), 150, pos.y() - 75), QVector3D(pos.x(), 50, pos.y()), QVector3D(0, 0, 1));
-        }
-        if (event->key() == Qt::Key_D)
-        {
-            scene.player()->SetCoords(QVector2D(pos.x() - 5, pos.y()));
-            scene.camera().lookAt(QVector3D(pos.x(), 150, pos.y() - 75), QVector3D(pos.x(), 50, pos.y()), QVector3D(0, 0, 1));
-        }
-        if (event->key() == Qt::Key_Up)
-        {
-            scene.camera().setSpeed(QVector3D(50, 0, 0));
-        }
-        if (event->key() == Qt::Key_Down)
-        {
-            scene.camera().setSpeed(QVector3D(-50, 0, 0));
-        }
-    }
+    //    }
 }
 
 void Window3D::keyReleaseEvent(QKeyEvent *event)
 {
-    if (!m_sceneStack.empty())
-    {
-        auto &scene = (*m_sceneStack.back());
-        if (event->key() == Qt::Key_W)
-        {
-            scene.camera().setSpeed(QVector3D(0, 0, 0));
-        }
-        if (event->key() == Qt::Key_S)
-        {
-            scene.camera().setSpeed(QVector3D(0, 0, 0));
-        }
-        if (event->key() == Qt::Key_A)
-        {
-            scene.camera().setSpeed(QVector3D(0, 0, 0));
-        }
-        if (event->key() == Qt::Key_D)
-        {
-            scene.camera().setSpeed(QVector3D(0, 0, 0));
-        }
-        if (event->key() == Qt::Key_Up)
-        {
-            scene.camera().setSpeed(QVector3D(0, 0, 0));
-        }
-        if (event->key() == Qt::Key_Down)
-        {
-            scene.camera().setSpeed(QVector3D(0, 0, 0));
-        }
-    }
+    m_pressedKeys.remove((Qt::Key)event->key());
+}
+
+void Window3D::keyPressEvent(QKeyEvent *event)
+{
+    m_pressedKeys.insert((Qt::Key)event->key());
 }

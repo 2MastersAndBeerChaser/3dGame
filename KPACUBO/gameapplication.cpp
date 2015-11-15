@@ -12,49 +12,59 @@ int GameApplication::enterGameLoop()
     m_window.setFixedSize(FIXED_WINDOW_SIZE);
     m_window.show();
     connect(&m_window, &QWindow::activeChanged, this, &GameApplication::loadScene);
-//    m_window.popScene();
-//    auto scene = std::make_shared<BaseScene>();
-//    m_player->SetCoords(QVector2D(0, 0));
-//    new PlayerNode(scene.get(), QVector2D(0, 0));
-//    m_window.pushScene(scene);
+    connect(&m_window, &Window3D::ExitReached, this, &GameApplication::nextFloor);
     return exec();
 }
 
 void GameApplication::loadScene()
 {
     disconnect(&m_window, &QWindow::activeChanged, this, &GameApplication::loadScene);
-    CaveGenerator cgen(50, 50, 10);
+    CaveGenerator cgen(MAP_SIZE, MAP_SIZE, 10);
     m_map = cgen.GetCaveMap();
     ObjectsGenerator ogen(m_map);
     m_map = ogen.GenerateObj();
 
     std::shared_ptr<BaseScene> scene = std::make_shared<BaseScene>();
     scene->camera().setViewport(m_window.size());
-    //scene->camera().lookAt(QVector3D(0, 300, -10), QVector3D(0, 0, 0), QVector3D(0, 0, 1));
 
     new ColoredCube(scene.get(), {0, 0, 0}, ColoredCube::WallType::CaveGround);
 
     int x = 0;
     int z = 0;
-    for (size_t i = 0; i < m_map.size(); i++, z += 20)
+    for (size_t i = 0; i < MAP_SIZE; i++, z += WALL_LEN)
     {
         x = 0;
-        for (size_t j = 0; j < m_map[0].size(); j++, x += 20)
+        for (size_t j = 0; j < MAP_SIZE; j++, x += WALL_LEN)
         {
-            if (m_map[i][j] == 1)
+            if (m_map[i][j] == WALL_CELL)
             {
                 new ColoredCube(scene.get(), {x, 0, z}, ColoredCube::WallType::CaveWall);
             }
-            else if (m_map[i][j] == 2)
+            else if (m_map[i][j] == ENTERANCE_CELL)
             {
                 m_player = new PlayerNode(scene.get(), QVector2D(x, z));
+            }
+            else if (m_map[i][j] == SIDE_EXIT_CELL)
+            {
+                m_exit = new ExitNode(scene.get(), QVector2D(x, z));
+            }
+            else if (m_map[i][j] == GROUND_EXIT_CELL)
+            {
+
             }
         }
     }
 
     scene->setPlayer(m_player);
+    scene->setExit(m_exit);
     auto pos = m_player->GetCoords();
-    scene->camera().lookAt(QVector3D(pos.x(), 150, pos.y() - 75), QVector3D(pos.x(), 50, pos.y()), QVector3D(0, 0, 1));
+    scene->camera().lookAt(QVector3D(pos.x(), CAM_UP, pos.y() - CAM_RANGE), QVector3D(pos.x(), CAM_UP_ANGLE, pos.y()), QVector3D(0, 0, 1));
 
     m_window.pushScene(scene);
+}
+
+void GameApplication::nextFloor()
+{
+    qDebug() << "HOROSHO RABOTAET";
+
 }

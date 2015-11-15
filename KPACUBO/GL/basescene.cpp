@@ -12,6 +12,7 @@ BaseScene::BaseScene(QSize viewportSize)
     , m_camera(viewportSize)
     , m_clearColor(Qt::black)
     , m_player(nullptr)
+    , m_exit(nullptr)
 {
 }
 
@@ -46,6 +47,11 @@ void BaseScene::setPlayer(PlayerNode *player)
     m_player = player;
 }
 
+void BaseScene::setExit(ExitNode *exit)
+{
+    m_exit = exit;
+}
+
 void BaseScene::advance(int64_t msec)
 {
     (void)msec;
@@ -59,11 +65,19 @@ void BaseScene::render(QPainter &painter)
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
+    glEnable(GL_LIGHT0);
     glCullFace(GL_BACK);
     glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+    glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
     glLineWidth(2);
     glEnable(GL_LINE_SMOOTH);
+    glEnable(GL_NORMALIZE);
 
+    GLfloat light0_diffuse[] = {1, 1, 100, 1};
+    GLfloat light0_direction[] = {50.0, 0.0, 0.0, 0.0};
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
+    glLightfv(GL_LIGHT0, GL_POSITION, light0_direction);
     GLHelper::dumpIfError();
 }
 
@@ -96,3 +110,7 @@ PlayerNode *BaseScene::player() const
     return m_player;
 }
 
+ExitNode *BaseScene::exit() const
+{
+    return m_exit;
+}

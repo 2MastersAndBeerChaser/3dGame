@@ -4,9 +4,9 @@
 
 void PlayerNode::drawOpenGLCube(bool showWired)
 {
-    int x = m_coord.x();
-    int z = m_coord.y();
-    int y = 0;
+    float x = m_coord.x();
+    float z = m_coord.y();
+    float y = 0;
     m_color = {8, 5, 125, 255};
     SimpleVertex vertices[8] =
     {
@@ -59,33 +59,23 @@ PlayerNode::PlayerNode(SceneNode *parent, QVector2D coord)
     : SceneNode(parent),
       m_coord(coord)
 {
-    m_height = 50;
+    m_height = 5;
 }
 
-void PlayerNode::keyPressEvent(QKeyEvent *event)
+void PlayerNode::SetMove(float dx, float dy)
 {
-    if (event->key() == Qt::Key_Space)
-    {
-        m_coord.setX(m_coord.x() + 5);
-        m_coord.setY(m_coord.y() + 5);
-    }
-}
-
-void PlayerNode::keyReleaseEvent(QKeyEvent *)
-{
-
-}
-
-void PlayerNode::SetCoords(QVector2D coord)
-{
-    qDebug() << "en";
-    m_coord.setX(coord.x());
-    m_coord.setY(coord.y());
+    m_coord.setX(m_coord.x() + dx);
+    m_coord.setY(m_coord.y() + dy);
 }
 
 QVector2D PlayerNode::GetCoords() const
 {
     return m_coord;
+}
+
+void PlayerNode::SetSpeed(QVector2D vecSpeed)
+{
+    m_speed = vecSpeed;
 }
 
 void PlayerNode::advance(int64_t msec)
@@ -96,6 +86,7 @@ void PlayerNode::advance(int64_t msec)
 void PlayerNode::render(QPainter &painter)
 {
     (void)painter;
+    m_coord += m_speed;
     drawOpenGLCube(false);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

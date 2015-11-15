@@ -6,6 +6,7 @@
 #include <memory>
 #include <QMouseEvent>
 #include "../GL/basescene.h"
+#include <QSet>
 
 class Window3D : public QWindow
 {
@@ -20,13 +21,16 @@ public:
 
     bool event(QEvent *) override;
 
+signals:
+    void ExitReached();
+
 protected:
     void exposeEvent(QExposeEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
     void showEvent(QShowEvent *event) override;
     virtual void keyPressEvent(QKeyEvent *) override;
-    virtual void keyReleaseEvent(QKeyEvent *) override;
     virtual void mouseMoveEvent(QMouseEvent *) override;
+    virtual void keyReleaseEvent(QKeyEvent *) override;
 
 private slots:
     void deferRender();
@@ -34,6 +38,7 @@ private slots:
     void stopRendering();
     void initRendering();
     void updateScene(BaseScene &scene);
+    void HandleMutliKeyPress();
 
 private:
     QTime m_updateTime;
@@ -41,4 +46,5 @@ private:
     bool m_updatePending = false;
     std::vector<std::shared_ptr<BaseScene>> m_sceneStack;
     QOpenGLContext *m_pContext = nullptr;
+    QSet<Qt::Key> m_pressedKeys;
 };

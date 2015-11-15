@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     GL/scenecamera.cpp \
     GL/scenenode.cpp \
     Generators/objectsgenerator.cpp \
-    Nodes/playernode.cpp
+    Nodes/playernode.cpp \
+    Nodes/exitnode.cpp
 
 HEADERS  += \
     Generators/cavegenerator.h \
@@ -40,6 +41,7 @@ HEADERS  += \
     Generators/generators.h \
     Generators/objectsgenerator.h \
     Nodes/playernode.h \
-    globals.h
+    globals.h \
+    Nodes/exitnode.h
 
 FORMS    +=

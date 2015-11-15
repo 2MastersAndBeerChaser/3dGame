@@ -83,20 +83,20 @@ void ColoredCube::drawOpenGLCube(bool showWired)
 ColoredCube::ColoredCube(SceneNode *parent, Vec3 coord, WallType wallType)
     : SceneNode(parent),
       m_coord(coord),
-      m_len(20)
+      m_len(WALL_LEN)
 {
     switch (wallType)
     {
     case WallType::CaveGround:
         m_color = {128, 128, 128, 255};
         m_height = 0;
-        m_len = 1000;
+        m_len = MAP_SIZE * WALL_LEN;
 
 
         break;
     case WallType::CaveWall:
         m_color = {128, 5, 5, 255};
-        m_height = 40;
+        m_height = WALL_LEN;
         break;
     case WallType::RoomGround:
         m_color = {128, 5, 128, 255};

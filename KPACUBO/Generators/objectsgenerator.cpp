@@ -18,34 +18,66 @@ std::vector<std::vector<int> > ObjectsGenerator::GenerateObj()
 
 void ObjectsGenerator::GenEnterance()
 {
-    std::vector<Coord> freeSpace;
     switch (m_or)
     {
     case Orientation::Bottom:
-        GFreeSpace(freeSpace, {0, m_map.size() - (m_map.size() / 5)}, {m_map[0].size(), m_map.size()});
+        GetFreeCells({0, MAP_SIZE - (MAP_SIZE / 5)}, {MAP_SIZE, MAP_SIZE});
         break;
     case Orientation::Top:
-        GFreeSpace(freeSpace, {0, 0}, {m_map[0].size(), m_map.size() / 5});
+        GetFreeCells({0, 0}, {MAP_SIZE, MAP_SIZE / 5});
         break;
     case Orientation::Left:
-        GFreeSpace(freeSpace, {0, 0}, {m_map[0].size() / 5, m_map.size()});
+        GetFreeCells({0, 0}, {MAP_SIZE / 5, MAP_SIZE});
         break;
     case Orientation::Right:
-        GFreeSpace(freeSpace, {m_map[0].size() - m_map[0].size() / 5, 0}, {m_map[0].size(), m_map.size()});
+        GetFreeCells({MAP_SIZE - MAP_SIZE / 5, 0}, {MAP_SIZE, MAP_SIZE});
         break;
     case Orientation::Random:
-        GFreeSpace(freeSpace, {0, 0}, {m_map[0].size(), m_map.size()});
+        GetFreeCells({0, 0}, {MAP_SIZE, MAP_SIZE});
         break;
     default:
         break;
     }
-    Coord enterance = freeSpace[qrand() % (int)freeSpace.size()];
-    m_map[enterance.x][enterance.y] = 2;
+    Coord enterance = m_freeCells[qrand() % (int)m_freeCells.size()];
+    m_map[enterance.x][enterance.y] = ENTERANCE_CELL;
 }
 
 void ObjectsGenerator::GenExit()
 {
-
+    m_freeCells.clear();
+    for (size_t i = 0; i < MAP_SIZE; i++)
+    {
+        if (m_map[0][i] == 0)
+        {
+            m_freeCells.push_back({0, i});
+        }
+        if (m_map[MAP_SIZE - 1][i] == 0)
+        {
+            m_freeCells.push_back({MAP_SIZE - 1, i});
+        }
+    }
+    for (size_t j = 0; j < MAP_SIZE; j++)
+    {
+        if (m_map[j][0] == 0)
+        {
+            m_freeCells.push_back({j, 0});
+        }
+        if (m_map[j][MAP_SIZE - 1] == 0)
+        {
+            m_freeCells.push_back({j, MAP_SIZE - 1});
+        }
+    }
+    if (m_freeCells.size() > 0)
+    {
+        Coord exit = m_freeCells[qrand() % (int)m_freeCells.size()];
+        m_map[exit.x][exit.y] = SIDE_EXIT_CELL;
+    }
+    else
+    {
+        GetFreeCells({0, 0}, {MAP_SIZE, MAP_SIZE});
+        Coord exit = m_freeCells[qrand() % (int)m_freeCells.size()];
+        m_map[exit.x][exit.y] = GROUND_EXIT_CELL;
+    }
 }
 
 void ObjectsGenerator::GenTreasure()
@@ -58,15 +90,15 @@ void ObjectsGenerator::GenEnemies()
 
 }
 
-void ObjectsGenerator::GFreeSpace(std::vector<ObjectsGenerator::Coord> &coords, Coord lt, Coord rb)
+void ObjectsGenerator::GetFreeCells(Coord lt, Coord rb)
 {
-    for (int i = lt.y; i < rb.y; i++)
+    for (size_t i = lt.y; i < rb.y; i++)
     {
-        for (int j = lt.x; j < rb.x; j++)
+        for (size_t j = lt.x; j < rb.x; j++)
         {
             if (m_map[i][j] == 0)
             {
-                coords.push_back({j, i});
+                m_freeCells.push_back({j, i});
             }
         }
     }
