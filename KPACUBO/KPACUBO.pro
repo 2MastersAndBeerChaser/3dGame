@@ -3,7 +3,7 @@
 # Project created by QtCreator 2015-10-23T09:22:49
 #
 #-------------------------------------------------
-
+LIBS += -lopengl32
 QT       += core gui
 
 CONFIG += c++11
@@ -24,8 +24,8 @@ SOURCES += main.cpp\
     GL/glhelper.cpp \
     GL/scenecamera.cpp \
     GL/scenenode.cpp \
-    Characters/player.cpp \
-    Generators/objectsgenerator.cpp
+    Generators/objectsgenerator.cpp \
+    Nodes/playernode.cpp
 
 HEADERS  += \
     Generators/cavegenerator.h \
@@ -38,7 +38,8 @@ HEADERS  += \
     GL/scenecamera.h \
     GL/scenenode.h \
     Generators/generators.h \
-    Characters/player.h \
-    Generators/objectsgenerator.h
+    Generators/objectsgenerator.h \
+    Nodes/playernode.h \
+    globals.h
 
 FORMS    +=

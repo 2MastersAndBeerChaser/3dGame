@@ -38,5 +38,5 @@ private:
     Vec3 m_coord;
     Color4 m_color;
     int m_height;
-    const int LEN = 2;
+    int m_len;
 };

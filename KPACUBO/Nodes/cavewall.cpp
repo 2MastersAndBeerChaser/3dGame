@@ -1,4 +1,5 @@
 #include "cavewall.h"
+#include <QPainter>
 
 void ColoredCube::drawOpenGLCube(bool showWired)
 {
@@ -28,13 +29,13 @@ void ColoredCube::drawOpenGLCube(bool showWired)
     SimpleVertex vertices[8] =
     {
         {{x, y, z}, m_color},		// 0
-        {{x + LEN, y, z}, m_color},		// 1
-        {{x + LEN, y + m_height, z}, m_color},		// 2
+        {{x + m_len, y, z}, m_color},		// 1
+        {{x + m_len, y + m_height, z}, m_color},		// 2
         {{x, y + m_height, z}, m_color},			// 3
-        {{x, y, z + LEN}, m_color},		// 4
-        {{x + LEN, y, z + LEN}, m_color},	// 5
-        {{x + LEN, y + m_height, z + LEN}, m_color},		// 6
-        {{x, y + m_height, z + LEN}, m_color},		// 7
+        {{x, y, z + m_len}, m_color},		// 4
+        {{x + m_len, y, z + m_len}, m_color},	// 5
+        {{x + m_len, y + m_height, z + m_len}, m_color},		// 6
+        {{x, y + m_height, z + m_len}, m_color},		// 7
     };
 
     if (showWired) {
@@ -81,17 +82,21 @@ void ColoredCube::drawOpenGLCube(bool showWired)
 
 ColoredCube::ColoredCube(SceneNode *parent, Vec3 coord, WallType wallType)
     : SceneNode(parent),
-      m_coord(coord)
+      m_coord(coord),
+      m_len(20)
 {
     switch (wallType)
     {
     case WallType::CaveGround:
         m_color = {128, 128, 128, 255};
         m_height = 0;
+        m_len = 1000;
+
+
         break;
     case WallType::CaveWall:
         m_color = {128, 5, 5, 255};
-        m_height = 4;
+        m_height = 40;
         break;
     case WallType::RoomGround:
         m_color = {128, 5, 128, 255};
@@ -118,6 +123,5 @@ void ColoredCube::render(QPainter &painter)
 
     drawOpenGLCube(false);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    //drawOpenGLCube(true);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }

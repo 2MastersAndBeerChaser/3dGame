@@ -18,29 +18,29 @@ std::vector<std::vector<int> > ObjectsGenerator::GenerateObj()
 
 void ObjectsGenerator::GenEnterance()
 {
-    /*std::vector<Coord> freeSpace;
+    std::vector<Coord> freeSpace;
     switch (m_or)
     {
     case Orientation::Bottom:
-        GetFreeSpace(freeSpace, {0, m_map.size() - (m_map.size() / 5)}, {m_map[0].size(), m_map.size()});
+        GFreeSpace(freeSpace, {0, m_map.size() - (m_map.size() / 5)}, {m_map[0].size(), m_map.size()});
         break;
     case Orientation::Top:
-        GetFreeSpace(freeSpace, {0, 0}, {m_map[0].size(), m_map.size() / 5});
+        GFreeSpace(freeSpace, {0, 0}, {m_map[0].size(), m_map.size() / 5});
         break;
     case Orientation::Left:
-        GetFreeSpace(freeSpace, {0, 0}, {m_map[0].size() / 5, m_map.size()});
+        GFreeSpace(freeSpace, {0, 0}, {m_map[0].size() / 5, m_map.size()});
         break;
     case Orientation::Right:
-        GetFreeSpace(freeSpace, {m_map[0].size() - m_map[0].size() / 5, 0}, {m_map[0].size(), m_map.size()});
+        GFreeSpace(freeSpace, {m_map[0].size() - m_map[0].size() / 5, 0}, {m_map[0].size(), m_map.size()});
         break;
     case Orientation::Random:
-        GetFreeSpace(freeSpace, {0, 0}, {m_map[0].size(), m_map.size()});
+        GFreeSpace(freeSpace, {0, 0}, {m_map[0].size(), m_map.size()});
         break;
     default:
         break;
     }
     Coord enterance = freeSpace[qrand() % (int)freeSpace.size()];
-    m_map[enterance.x][enterance.y] = 2;*/
+    m_map[enterance.x][enterance.y] = 2;
 }
 
 void ObjectsGenerator::GenExit()
@@ -58,7 +58,7 @@ void ObjectsGenerator::GenEnemies()
 
 }
 
-/*void ObjectsGenerator::GetFreeSpace(std::vector<ObjectsGenerator::Coord> &coords, Coord lt, Coord rb)
+void ObjectsGenerator::GFreeSpace(std::vector<ObjectsGenerator::Coord> &coords, Coord lt, Coord rb)
 {
     for (int i = lt.y; i < rb.y; i++)
     {
@@ -70,4 +70,4 @@ void ObjectsGenerator::GenEnemies()
             }
         }
     }
-}*/
+}

@@ -27,7 +27,7 @@ private:
     void GenExit();
     void GenTreasure();
     void GenEnemies();
-    //void GetFreeSpace(std::vector<Coord> & coords, Coord lt, Coord rb);
+    void GFreeSpace(std::vector<Coord> & coords, Coord lt, Coord rb);
 
     std::vector<std::vector<int> > m_map;
     Orientation m_or;
