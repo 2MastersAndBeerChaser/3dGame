@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     GL/scenenode.cpp \
     Generators/objectsgenerator.cpp \
     Nodes/playernode.cpp \
-    Nodes/exitnode.cpp
+    Nodes/exitnode.cpp \
+    Handlers/collisionhandler.cpp
 
 HEADERS  += \
     Generators/cavegenerator.h \
@@ -42,6 +43,7 @@ HEADERS  += \
     Generators/objectsgenerator.h \
     Nodes/playernode.h \
     globals.h \
-    Nodes/exitnode.h
+    Nodes/exitnode.h \
+    Handlers/collisionhandler.h
 
 FORMS    +=

@@ -153,19 +153,19 @@ void Window3D::HandleMutliKeyPress()
         float dy = 0;
         if (m_pressedKeys.contains(Qt::Key_W))
         {
-            dy += 0.5;
+            dy += MOVE_SPEED;
         }
         if (m_pressedKeys.contains(Qt::Key_S))
         {
-            dy -= 0.5;
+            dy -= MOVE_SPEED;
         }
         if (m_pressedKeys.contains(Qt::Key_A))
         {
-            dx += 0.5;
+            dx += MOVE_SPEED;
         }
         if (m_pressedKeys.contains(Qt::Key_D))
         {
-            dx -= 0.5;
+            dx -= MOVE_SPEED;
         }
 
         scene.player()->SetMove(dx, dy);
