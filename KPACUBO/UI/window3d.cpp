@@ -51,6 +51,11 @@ bool Window3D::event(QEvent *event)
     }
 }
 
+void Window3D::SetCollisionHandler(CollisionHandler colHandler)
+{
+    m_collisionHandler = colHandler;
+}
+
 void Window3D::exposeEvent(QExposeEvent *event)
 {
     QWindow::exposeEvent(event);
@@ -167,7 +172,18 @@ void Window3D::HandleMutliKeyPress()
         {
             dx -= MOVE_SPEED;
         }
-
+//        if (m_collisionHandler.TryMove(dx, dy))
+//        {
+//            scene.player()->SetMove(dx, dy);
+//        }
+//        else if (m_collisionHandler.TryMove(dx, 0))
+//        {
+//            scene.player()->SetMove(dx, 0);
+//        }
+//        else if (m_collisionHandler.TryMove(0, dy))
+//        {
+//            scene.player()->SetMove(0, dy);
+//        }
         scene.player()->SetMove(dx, dy);
         pos = scene.player()->GetCoords();
         QVector2D posExit = scene.exit()->GetCoords();

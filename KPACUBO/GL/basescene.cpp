@@ -4,7 +4,7 @@
 #include "glhelper.h"
 #include <QPainter>
 
-static float Z_NEAR = 0.02;
+static float Z_NEAR = 0.02f;
 static float Z_FAR = 1000.0;
 
 BaseScene::BaseScene(QSize viewportSize)
@@ -62,22 +62,29 @@ void BaseScene::render(QPainter &painter)
     (void)painter;
     glClearColor(m_clearColor.redF(), m_clearColor.greenF(), m_clearColor.blueF(), m_clearColor.alphaF());
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
+    glShadeModel(GL_FLAT);
+    glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
-    glEnable(GL_LIGHT0);
+    glEnable(GL_MULTISAMPLE);
     glCullFace(GL_BACK);
     glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-    glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
     glLineWidth(2);
     glEnable(GL_LINE_SMOOTH);
     glEnable(GL_NORMALIZE);
 
-    GLfloat light0_diffuse[] = {1, 1, 100, 1};
-    GLfloat light0_direction[] = {50.0, 0.0, 0.0, 0.0};
-    glEnable(GL_LIGHT0);
+    GLfloat light0_diffuse[] = {0.5f, 0.5f, 0.5f, 1.0f};
+    GLfloat light0_direction[] = {0.0f, 100.0f, 100.0f, 0.0f};
+    GLfloat light_ambient[] = {0.1f, 0.1f, 0.1f, 1.0f};
+    //glEnable(GL_LIGHT1);
+    glLightfv (GL_LIGHT0, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
     glLightfv(GL_LIGHT0, GL_POSITION, light0_direction);
+    glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    //glDisable(GL_LIGHT0);
     GLHelper::dumpIfError();
 }
 

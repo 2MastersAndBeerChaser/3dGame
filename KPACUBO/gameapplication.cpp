@@ -28,6 +28,7 @@ void GameApplication::loadScene()
     scene->camera().setViewport(m_window.size());
 
     new ColoredCube(scene.get(), {0, 0, 0}, ColoredCube::WallType::CaveGround);
+    new SkyBox(scene.get());
 
     int x = 0;
     int z = 0;
@@ -57,8 +58,13 @@ void GameApplication::loadScene()
 
     scene->setPlayer(m_player);
     scene->setExit(m_exit);
-    auto pos = m_player->GetCoords();
-    scene->camera().lookAt(QVector3D(pos.x(), CAM_UP, pos.y() - CAM_RANGE), QVector3D(pos.x(), CAM_UP_ANGLE, pos.y()), QVector3D(0, 0, 1));
+    QVector2D pos = m_player->GetCoords();
+    //scene->camera().lookAt(QVector3D(pos.x(), CAM_UP, pos.y() - CAM_RANGE), QVector3D(pos.x(), CAM_UP_ANGLE, pos.y()), QVector3D(0, 0, 1));
+
+    CollisionHandler colHandler;
+    colHandler.SetMap(m_map);
+    colHandler.SetCoord(pos);
+    m_window.SetCollisionHandler(colHandler);
 
     m_window.pushScene(scene);
 }

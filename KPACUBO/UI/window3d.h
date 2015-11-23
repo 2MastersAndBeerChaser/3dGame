@@ -7,6 +7,7 @@
 #include <QMouseEvent>
 #include "../GL/basescene.h"
 #include <QSet>
+#include "Handlers/collisionhandler.h"
 
 class Window3D : public QWindow
 {
@@ -20,6 +21,7 @@ public:
     void popScene();
 
     bool event(QEvent *) override;
+    void SetCollisionHandler(CollisionHandler colHandler);
 
 signals:
     void ExitReached();
@@ -38,13 +40,14 @@ private slots:
     void stopRendering();
     void initRendering();
     void updateScene(BaseScene &scene);
-    void HandleMutliKeyPress();
 
 private:
+    void HandleMutliKeyPress();
     QTime m_updateTime;
     bool m_canRender = false;
     bool m_updatePending = false;
     std::vector<std::shared_ptr<BaseScene>> m_sceneStack;
     QOpenGLContext *m_pContext = nullptr;
     QSet<Qt::Key> m_pressedKeys;
+    CollisionHandler m_collisionHandler;
 };

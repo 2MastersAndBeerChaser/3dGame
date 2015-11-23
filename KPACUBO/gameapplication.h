@@ -7,6 +7,7 @@
 #include "Generators/generators.h"
 #include "globals.h"
 #include "Nodes/exitnode.h"
+#include "Nodes/skybox.h"
 
 class GameApplication : public QGuiApplication
 {

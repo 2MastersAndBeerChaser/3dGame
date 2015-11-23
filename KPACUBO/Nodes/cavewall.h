@@ -32,7 +32,7 @@ public:
     };
 
     ColoredCube(SceneNode *parent, Vec3 coord, WallType wallType);
-    void drawOpenGLCube(bool showWired);
+    void drawOpenGLCube();
     void advance(int64_t msec) override;
     void render(QPainter &painter) override;
 private:

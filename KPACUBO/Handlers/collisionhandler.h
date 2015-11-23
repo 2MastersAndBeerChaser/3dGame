@@ -9,13 +9,9 @@ public:
     CollisionHandler();
     void SetMap(std::vector<std::vector<int> > const& map);
     void SetCoord(QVector2D coord);
-signals:
-    void Collided();
-private slots:
-    void SetDiffMove(float dx, float dy);
+    bool TryMove(float dx, float dy);
 private:
     void FillMap();
     std::vector<std::vector<int> > m_map;
     QVector2D m_playerCoord;
-    uint m_mapLen;
 };

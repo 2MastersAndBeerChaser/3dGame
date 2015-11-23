@@ -1,7 +1,7 @@
 #include "cavewall.h"
 #include <QPainter>
 
-void ColoredCube::drawOpenGLCube(bool showWired)
+void ColoredCube::drawOpenGLCube()
 {
     /*
 
@@ -38,17 +38,6 @@ void ColoredCube::drawOpenGLCube(bool showWired)
         {{x, y + m_height, z + m_len}, m_color},		// 7
     };
 
-    if (showWired) {
-        for (SimpleVertex &vert : vertices) {
-            vert.pos.x *= 1.01;
-            vert.pos.y *= 1.01;
-            vert.pos.z *= 1.01;
-            vert.color.r = 0;
-            vert.color.g = 0;
-            vert.color.b = 0;
-        }
-    }
-
     // Массив граней, а точнее, индексов составляющих их вершин.
     // Индексы вершин граней перечисляются в порядке их обхода
     // против часовой стрелки (если смотреть на грань снаружи)
@@ -62,11 +51,15 @@ void ColoredCube::drawOpenGLCube(bool showWired)
         {4, 5, 6, 7},	// грань z>0
     };
 
+
+
     // Передаем информацию о массиве вершин
     glVertexPointer(3, GL_FLOAT, sizeof(SimpleVertex), &vertices[0].pos);
 
     // и массиве цветов
     glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SimpleVertex), &vertices[0].color);
+
+    //glBindTexture(GL_TEXTURE_2D, DiffuseTexture);
 
     // Разрешаем использование массива координат вершин и цветов
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -121,7 +114,7 @@ void ColoredCube::render(QPainter &painter)
 {
     (void)painter;
 
-    drawOpenGLCube(false);
+    drawOpenGLCube();
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }

@@ -26,7 +26,7 @@ public:
 
     ExitNode(SceneNode *parent, QVector2D coord);
     QVector2D GetCoords() const;
-    void drawOpenGLCube(bool showWired);
+    void drawOpenGLCube();
     void advance(int64_t msec) override;
     void render(QPainter &painter) override;
 

@@ -2,7 +2,7 @@
 #include <QPainter>
 #include <QDebug>
 
-void ExitNode::drawOpenGLCube(bool showWired)
+void ExitNode::drawOpenGLCube()
 {
     float x = m_coord.x();
     float z = m_coord.y();
@@ -19,17 +19,6 @@ void ExitNode::drawOpenGLCube(bool showWired)
         {{x + WALL_LEN, y + m_height + 1, z + WALL_LEN}, m_color},		// 6
         {{x, y + m_height + 1, z + WALL_LEN}, m_color},		// 7
     };
-
-    if (showWired) {
-        for (SimpleVertex &vert : vertices) {
-            vert.pos.x *= 1.01;
-            vert.pos.y *= 1.01;
-            vert.pos.z *= 1.01;
-            vert.color.r = 0;
-            vert.color.g = 0;
-            vert.color.b = 0;
-        }
-    }
 
     const unsigned char faces[6][4] =
     {
@@ -70,7 +59,7 @@ void ExitNode::advance(int64_t msec)
 void ExitNode::render(QPainter &painter)
 {
     (void)painter;
-    drawOpenGLCube(false);
+    drawOpenGLCube();
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }

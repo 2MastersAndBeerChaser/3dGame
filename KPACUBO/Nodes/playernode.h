@@ -3,6 +3,7 @@
 #include "../GL/scenenode.h"
 #include <qopengl.h>
 #include <QVector2D>
+#include "globals.h"
 
 class PlayerNode : public SceneNode
 {
@@ -28,7 +29,7 @@ public:
     void SetMove(float dx, float dy);
     QVector2D GetCoords() const;
     void SetSpeed(QVector2D vecSpeed);
-    void drawOpenGLCube(bool showWired);
+    void drawOpenGLCube();
     void advance(int64_t msec) override;
     void render(QPainter &painter) override;
 
@@ -36,6 +37,5 @@ private:
     QVector2D m_coord;
     Color4 m_color;
     int m_height;
-    const int LEN = 2;
     QVector2D m_speed;
 };
