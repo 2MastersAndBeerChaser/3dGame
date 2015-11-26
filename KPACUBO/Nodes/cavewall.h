@@ -36,6 +36,10 @@ public:
     void advance(int64_t msec) override;
     void render(QPainter &painter) override;
 private:
+    GLuint CreateTexture();
+
+    GLuint m_caveWallTexture;
+    bool m_isWall;
     Vec3 m_coord;
     Color4 m_color;
     int m_height;

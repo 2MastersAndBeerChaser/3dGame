@@ -71,6 +71,6 @@ void GameApplication::loadScene()
 
 void GameApplication::nextFloor()
 {
-    qDebug() << "HOROSHO RABOTAET";
+    //qDebug() << "HOROSHO RABOTAET";
     loadScene();
 }

@@ -24,7 +24,7 @@ std::vector<std::vector<int> > CaveGenerator::GetCaveMap()
     {
         DoSimulationStep();
     }
-    ToDebug();
+    //ToDebug();
     return m_map;
 }
 

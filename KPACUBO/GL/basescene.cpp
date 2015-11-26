@@ -4,6 +4,11 @@
 #include "glhelper.h"
 #include <QPainter>
 
+#define ILUT_USE_OPENGL
+#include <IL/il.h>
+#include <IL/ilu.h>
+#include <IL/ilut.h>
+
 static float Z_NEAR = 0.02f;
 static float Z_FAR = 1000.0;
 
@@ -14,6 +19,11 @@ BaseScene::BaseScene(QSize viewportSize)
     , m_player(nullptr)
     , m_exit(nullptr)
 {
+    ilutRenderer(ILUT_OPENGL);
+    ilInit();
+    iluInit();
+    ilutInit();
+    ilutRenderer(ILUT_OPENGL);
 }
 
 BaseScene::~BaseScene()
