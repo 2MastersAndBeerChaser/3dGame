@@ -164,7 +164,7 @@ ColoredCube::ColoredCube(SceneNode *parent, Vec3 coord, WallType wallType)
     case WallType::RoomWall:
         m_color = {8, 5, 125, 255};
         m_isWall = false;
-        m_height = 4;
+        m_height =WALL_LEN - 1;
         break;
     default:
         break;

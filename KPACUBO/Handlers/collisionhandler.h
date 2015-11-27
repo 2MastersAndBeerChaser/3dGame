@@ -9,7 +9,8 @@ public:
     CollisionHandler();
     void SetMap(std::vector<std::vector<int> > const& map);
     void SetCoord(QVector2D coord);
-    bool TryMove(float dx, float dy);
+    QVector2D TryMove(float dx, float dy);
+    std::vector<std::vector<int> > GetMap() const;
 private:
     void FillMap();
     std::vector<std::vector<int> > m_map;

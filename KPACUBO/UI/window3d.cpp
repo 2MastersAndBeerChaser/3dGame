@@ -3,6 +3,7 @@
 #include <QPainter>
 #include <QGuiApplication>
 #include "globals.h"
+#include <QDebug>
 
 Window3D::Window3D(QWindow *parent)
     : QWindow(parent)
@@ -54,6 +55,12 @@ bool Window3D::event(QEvent *event)
 void Window3D::SetCollisionHandler(CollisionHandler colHandler)
 {
     m_collisionHandler = colHandler;
+    if (!m_sceneStack.empty())
+    {
+        BaseScene &scene = (*m_sceneStack.back());
+        QVector2D pos = scene.player()->GetCoords();
+        colHandler.SetCoord(pos);
+    }
 }
 
 void Window3D::exposeEvent(QExposeEvent *event)
@@ -150,7 +157,7 @@ void Window3D::updateScene(BaseScene &scene)
 
 void Window3D::HandleMutliKeyPress()
 {
-    if (!m_sceneStack.empty())
+    if (!m_sceneStack.empty() && m_pressedKeys.size() > 0)
     {
         BaseScene &scene = (*m_sceneStack.back());
         QVector2D pos = scene.player()->GetCoords();
@@ -172,21 +179,11 @@ void Window3D::HandleMutliKeyPress()
         {
             dx -= MOVE_SPEED;
         }
-//        if (m_collisionHandler.TryMove(dx, dy))
-//        {
-//            scene.player()->SetMove(dx, dy);
-//        }
-//        else if (m_collisionHandler.TryMove(dx, 0))
-//        {
-//            scene.player()->SetMove(dx, 0);
-//        }
-//        else if (m_collisionHandler.TryMove(0, dy))
-//        {
-//            scene.player()->SetMove(0, dy);
-//        }
-        scene.player()->SetMove(dx, dy);
+        QVector2D movement = m_collisionHandler.TryMove(dx, dy);
+        scene.player()->SetMove(movement.x(), movement.y());
         pos = scene.player()->GetCoords();
         QVector2D posExit = scene.exit()->GetCoords();
+        qDebug() << "Current pos in map = " << pos.x() << " " << pos.y();
         if (pos.y() >= posExit.y() && pos.y() <= posExit.y() + WALL_LEN
                 && pos.x() >= posExit.x() && pos.x() <= posExit.x() + WALL_LEN)
         {
@@ -198,16 +195,6 @@ void Window3D::HandleMutliKeyPress()
 
 void Window3D::mouseMoveEvent(QMouseEvent *)
 {
-//    if (!m_sceneStack.empty())
-//    {
-//        auto &scene = (*m_sceneStack.back());
-//        auto q = scene.camera().eye();
-//        scene.camera().lookAt(scene.camera().eye(),
-//                              scene.camera().eye() + QVector3D(event->y() / 1000.0f, event->x() / 1000.f, 0),
-//                              QVector3D(0, 0, 1));
-//        auto w = scene.camera().eye();
-//        int u = 3;
-    //    }
 }
 
 void Window3D::keyReleaseEvent(QKeyEvent *event)

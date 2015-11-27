@@ -39,15 +39,15 @@ void GameApplication::loadScene()
         {
             if (m_map[i][j] == WALL_CELL)
             {
-                new ColoredCube(scene.get(), {x, 0, z}, ColoredCube::WallType::CaveWall);
+                new ColoredCube(scene.get(), {z, 0, x}, ColoredCube::WallType::CaveWall);
             }
             else if (m_map[i][j] == ENTERANCE_CELL)
             {
-                m_player = new PlayerNode(scene.get(), QVector2D(x, z));
+                m_player = new PlayerNode(scene.get(), QVector2D(z, x));
             }
             else if (m_map[i][j] == SIDE_EXIT_CELL)
             {
-                m_exit = new ExitNode(scene.get(), QVector2D(x, z));
+                m_exit = new ExitNode(scene.get(), QVector2D(z, x));
             }
             else if (m_map[i][j] == GROUND_EXIT_CELL)
             {
@@ -59,11 +59,21 @@ void GameApplication::loadScene()
     scene->setPlayer(m_player);
     scene->setExit(m_exit);
     QVector2D pos = m_player->GetCoords();
-    //scene->camera().lookAt(QVector3D(pos.x(), CAM_UP, pos.y() - CAM_RANGE), QVector3D(pos.x(), CAM_UP_ANGLE, pos.y()), QVector3D(0, 0, 1));
-
+	scene->camera().lookAt(QVector3D(pos.x(), CAM_UP, pos.y() - CAM_RANGE), QVector3D(pos.x(), CAM_UP_ANGLE, pos.y()), QVector3D(0, 0, 1));
     CollisionHandler colHandler;
     colHandler.SetMap(m_map);
     colHandler.SetCoord(pos);
+//    std::vector<std::vector<int> > map2 = colHandler.GetMap();
+//    for (size_t i = 0; i < map2.size(); i++)
+//    {
+//        for (size_t j = 0; j < map2.size(); j++)
+//        {
+//            if (map2[i][j] == WALL_CELL)
+//            {
+//                new ColoredCube(scene.get(), {i, 0, j}, ColoredCube::WallType::RoomWall);
+//            }
+//        }
+//    }
     m_window.SetCollisionHandler(colHandler);
 
     m_window.pushScene(scene);
@@ -71,6 +81,5 @@ void GameApplication::loadScene()
 
 void GameApplication::nextFloor()
 {
-    //qDebug() << "HOROSHO RABOTAET";
     loadScene();
 }
