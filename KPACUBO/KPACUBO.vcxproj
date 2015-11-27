@@ -153,6 +153,7 @@
     </ClCompile>
     <ClCompile Include="GL\basescene.cpp" />
     <ClCompile Include="Generators\cavegenerator.cpp" />
+    <ClCompile Include="GL\texturecache.cpp" />
     <ClCompile Include="Nodes\cavewall.cpp" />
     <ClCompile Include="Handlers\collisionhandler.cpp" />
     <ClCompile Include="Nodes\exitnode.cpp" />
@@ -204,6 +205,7 @@ endlocal
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
     <ClInclude Include="Generators\cavegenerator.h" />
+    <ClInclude Include="GL\texturecache.h" />
     <ClInclude Include="Nodes\cavewall.h" />
     <ClInclude Include="Handlers\collisionhandler.h" />
     <ClInclude Include="Nodes\exitnode.h" />

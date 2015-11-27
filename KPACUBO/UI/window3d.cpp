@@ -183,7 +183,6 @@ void Window3D::HandleMutliKeyPress()
         scene.player()->SetMove(movement.x(), movement.y());
         pos = scene.player()->GetCoords();
         QVector2D posExit = scene.exit()->GetCoords();
-        qDebug() << "Current pos in map = " << pos.x() << " " << pos.y();
         if (pos.y() >= posExit.y() && pos.y() <= posExit.y() + WALL_LEN
                 && pos.x() >= posExit.x() && pos.x() <= posExit.x() + WALL_LEN)
         {

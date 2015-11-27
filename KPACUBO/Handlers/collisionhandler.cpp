@@ -36,8 +36,8 @@ void CollisionHandler::SetCoord(QVector2D coord)
 
 QVector2D CollisionHandler::TryMove(float dx, float dy)
 {
-    float newX = floor(m_playerCoord.x() + dx);
-    float newY = floor(m_playerCoord.y() + dy);
+    float newX = m_playerCoord.x() + dx;
+    float newY = m_playerCoord.y() + dy;
     std::vector<QVector2D> vert;
     vert.push_back(QVector2D(newX, newY)); //br
     vert.push_back(QVector2D(newX + PLAYER_SIZE, newY)); //bl

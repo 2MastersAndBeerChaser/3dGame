@@ -1,12 +1,14 @@
 #include "texturecache.h"
 #include <QGLWidget>
 #include <QDebug>
+#include <QDir>
 
 GLuint TextureCache::m_wallTexture = 0;
 
 GLuint TextureCache::GetWallTexture()
 {
-    return GetTexture(&m_wallTexture, "D:/Code/3_1/git/3dGame/KPACUBO/lava_texture.png"); //-> сделать относительный путь
+    std::string s = QDir::currentPath().toStdString() + "/lava_texture.png";
+    return GetTexture(&m_wallTexture, s.c_str()); //-> сделать относительный путь
 }
 
 GLuint TextureCache::GetTexture(GLuint *textureID, const char *textureName)

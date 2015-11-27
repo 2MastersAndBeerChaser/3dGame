@@ -142,6 +142,9 @@
     <ClCompile Include="UI\window3d.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
+    <ClCompile Include="GL\texturecache.cpp">
+      <Filter>Source Files\GL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="gameapplication.h">
@@ -184,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="Handlers\collisionhandler.h">
       <Filter>Header Files\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="GL\texturecache.h">
+      <Filter>Header Files\GL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
