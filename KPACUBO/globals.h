@@ -14,4 +14,4 @@ static int SIDE_EXIT_CELL = 3;
 static int GROUND_EXIT_CELL = 4;
 static int PLAYER_SIZE = 2;
 
-static float MOVE_SPEED = 0.5;
+static float MOVE_SPEED = 0.8f; //0.5 - маловато
