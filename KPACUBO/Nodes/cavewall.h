@@ -38,7 +38,7 @@ public:
 private:
     GLuint CreateTexture();
 
-    GLuint m_caveWallTexture;
+    static GLuint m_caveWallTexture;
     bool m_isWall;
     Vec3 m_coord;
     Color4 m_color;

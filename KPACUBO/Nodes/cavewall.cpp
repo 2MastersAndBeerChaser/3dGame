@@ -1,5 +1,6 @@
 #include "cavewall.h"
 #include <QPainter>
+#include <QtOpenGL/QGLWidget>
 
 #define ILUT_USE_OPENGL
 #include <IL/il.h>
@@ -8,6 +9,7 @@
 
 #include <QDebug>
 
+GLuint ColoredCube::m_caveWallTexture = 0;
 //Нужно поменять способы загрузки - в идеале есть класс, у которого есть статические методы получения определнной текстуры
 //Сейчас же каждый раз все загружается, поэтому очень тормозит
 void ColoredCube::drawOpenGLCube()
@@ -64,9 +66,8 @@ void ColoredCube::drawOpenGLCube()
     {
         //qDebug() << "Start use texture";
         //здесь могут быть косяки с гранями
-        glEnable(GL_BLEND);
         glEnable(GL_TEXTURE_2D);
-        glColor3d(1,1,1);
+        //glColor3d(1,1,1);
         glBindTexture(GL_TEXTURE_2D, m_caveWallTexture);
         glBegin(GL_QUADS);
 
@@ -76,37 +77,37 @@ void ColoredCube::drawOpenGLCube()
         glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y + m_height, z + m_len);	// Верх лево
 
                         // Задняя грань
-        glTexCoord2f(1.0f, 0.0f); glVertex3f(x + m_len, y, z);	// Низ право
-        glTexCoord2f(1.0f, 1.0f); glVertex3f(x + m_len, y + m_height, z);	// Верх право
-        glTexCoord2f(0.0f, 1.0f); glVertex3f( x, y + m_height, z);	// Верх лево
-        glTexCoord2f(0.0f, 0.0f); glVertex3f( x, y, z);	// Низ лево
+        glTexCoord2f(1.0f, 0.0f); glVertex3f(x, y, z);	// Низ право
+        glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y + m_height, z);	// Верх право
+        glTexCoord2f(0.0f, 1.0f); glVertex3f(x + m_len, y + m_height, z);	// Верх лево
+        glTexCoord2f(0.0f, 0.0f); glVertex3f(x + m_len, y, z);	// Низ лево
 
                         // Верхняя грань
-        glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y + m_height, z);	// Верх лево
-        glTexCoord2f(0.0f, 0.0f); glVertex3f(x, y + m_height, z + m_len);	// Низ лево
-        glTexCoord2f(1.0f, 0.0f); glVertex3f(x + m_len, y + m_height, z + m_len);	// Низ право
-        glTexCoord2f(1.0f, 1.0f); glVertex3f( x + m_len, y + m_height, z);	// Верх право
+        glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y + m_height, z + m_len);	// Верх лево
+        glTexCoord2f(0.0f, 0.0f); glVertex3f(x + m_len, y + m_height, z + m_len);	// Низ лево
+        glTexCoord2f(1.0f, 0.0f); glVertex3f(x + m_len, y + m_height, z);	// Низ право
+        glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y + m_height, z);	// Верх право
 
                         // Нижняя грань
-        glTexCoord2f(1.0f, 1.0f); glVertex3f(x + m_len, y, z);	// Верх право
+        glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y, z + m_len);	// Верх право
         glTexCoord2f(0.0f, 1.0f); glVertex3f( x, y, z);	// Верх лево
-        glTexCoord2f(0.0f, 0.0f); glVertex3f(x, y, z + m_len);	// Низ лево
+        glTexCoord2f(0.0f, 0.0f); glVertex3f(x + m_len, y, z);	// Низ лево
         glTexCoord2f(1.0f, 0.0f); glVertex3f(x + m_len, y, z + m_len);	// Низ право
 
                         // Правая грань
-        glTexCoord2f(1.0f, 0.0f); glVertex3f( x + m_len, y, z);	// Низ право
-        glTexCoord2f(1.0f, 1.0f); glVertex3f( x + m_len, y + m_height, z);	// Верх право
-        glTexCoord2f(0.0f, 1.0f); glVertex3f(x + m_len, y + m_height, z + m_len);	// Верх лево
-        glTexCoord2f(0.0f, 0.0f); glVertex3f( x + m_len, y, z + m_len);	// Низ лево
+        glTexCoord2f(1.0f, 0.0f); glVertex3f(x + m_len, y, z + m_len);	// Низ право
+        glTexCoord2f(1.0f, 1.0f); glVertex3f(x + m_len, y, z);	// Верх право
+        glTexCoord2f(0.0f, 1.0f); glVertex3f(x + m_len, y + m_height, z);	// Верх лево
+        glTexCoord2f(0.0f, 0.0f); glVertex3f(x + m_len, y + m_height, z + m_len);	// Низ лево
 
                         // Левая грань
         glTexCoord2f(0.0f, 0.0f); glVertex3f(x, y, z + m_len);	// Низ лево
-        glTexCoord2f(1.0f, 0.0f); glVertex3f(x, y, z);	// Низ право
+        glTexCoord2f(1.0f, 0.0f); glVertex3f(x, y + m_height, z + m_len);	// Низ право
         glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y + m_height, z);	// Верх право
-        glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y + m_height, z + m_len);	// Верх лево
+        glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y, z);	// Верх лево
         glEnd();
         glDisable(GL_TEXTURE_2D);
-        glDisable(GL_BLEND);
+        //glDisable(GL_BLEND);
 
         return;
     }
@@ -135,8 +136,8 @@ ColoredCube::ColoredCube(SceneNode *parent, Vec3 coord, WallType wallType)
     : SceneNode(parent),
       m_coord(coord),
       m_len(WALL_LEN),
-      m_isWall(false),
-      m_caveWallTexture(0)
+      m_isWall(false)
+      //m_caveWallTexture(0)
 {
     switch (wallType)
     {
@@ -149,8 +150,10 @@ ColoredCube::ColoredCube(SceneNode *parent, Vec3 coord, WallType wallType)
         break;
     case WallType::CaveWall:
         m_color = {128, 5, 5, 255};
+        if (m_caveWallTexture == 0)
+            m_caveWallTexture = CreateTexture();
         m_isWall = true;
-        m_caveWallTexture = CreateTexture(); //для ПещераСтена
+         //для ПещераСтена
         m_height = WALL_LEN;
         break;
     case WallType::RoomGround:
@@ -178,7 +181,7 @@ void ColoredCube::render(QPainter &painter)
 {
     (void)painter;
 
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     drawOpenGLCube();
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //надо ли тут это делать ???
@@ -187,64 +190,80 @@ void ColoredCube::render(QPainter &painter)
 
 GLuint ColoredCube::CreateTexture()
 {
-    ILuint imageID;
-
     GLuint textureID;
-
-    ILboolean success;
-
-    ILenum error;
-
-    ilGenImages(1, &imageID);
-
-    ilBindImage(imageID);
-
-    success = ilLoadImage("D:/Code/3_1/git/3dGame/KPACUBO/Textures/lava_texture.png"); // тут нужно написать норм путь
-
-    if (success)
-    {
-        ILinfo ImageInfo;
-        iluGetImageInfo(&ImageInfo);
-        if (ImageInfo.Origin == IL_ORIGIN_UPPER_LEFT)
-        {
-            iluFlipImage();
-        }
-
-        success = ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
-
-        if (!success)
-        {
-            error = ilGetError();
-            return 0;
-        }
-
-        glGenTextures(1, &textureID);
-
-        glBindTexture(GL_TEXTURE_2D, textureID);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-        glTexImage2D(GL_TEXTURE_2D,
-                     0,
-                     ilGetInteger(IL_IMAGE_FORMAT),
-                     ilGetInteger(IL_IMAGE_WIDTH),
-                     ilGetInteger(IL_IMAGE_HEIGHT),
-                     0,
-                     ilGetInteger(IL_IMAGE_FORMAT),
-                     GL_UNSIGNED_BYTE,
-                     ilGetData());
-    }
-    else
-    {
-        error = ilGetError();
-        return 0;
-    }
-
-    ilDeleteImages(1, &imageID);
+    QImage texture;
+    texture.load("D:/STUD/V/CG/3dGame/KPACUBO/Textures/lava_texture.png");
+    texture = QGLWidget::convertToGLFormat(texture);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, (GLsizei)texture.width(), (GLsizei)texture.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, texture.bits());
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 
     return textureID;
+//    //qDebug() << "in create texture";
+//    ILuint imageID;
+
+//    GLuint textureID;
+
+//    ILboolean success;
+
+//    ILenum error;
+
+//    ilGenImages(1, &imageID);
+
+//    ilBindImage(imageID);
+//   // qDebug() << "in create texture";
+//    success = ilLoadImage("D:/STUD/V/CG/3dGame/KPACUBO/Textures/lava_texture.png"); // тут нужно написать норм путь
+//  //  qDebug() << "stop";
+//    if (success)
+//    {
+//        ILinfo ImageInfo;
+//        iluGetImageInfo(&ImageInfo);
+//        if (ImageInfo.Origin == IL_ORIGIN_UPPER_LEFT)
+//        {
+//            iluFlipImage();
+//        }
+
+//        success = ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+
+//        if (!success)
+//        {
+//            error = ilGetError();
+//            qDebug() << "error " << error;
+//            return 0;
+//        }
+
+//        glGenTextures(1, &textureID);
+
+//        glBindTexture(GL_TEXTURE_2D, textureID);
+
+//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+//        glTexImage2D(GL_TEXTURE_2D,
+//                     0,
+//                     ilGetInteger(IL_IMAGE_FORMAT),
+//                     ilGetInteger(IL_IMAGE_WIDTH),
+//                     ilGetInteger(IL_IMAGE_HEIGHT),
+//                     0,
+//                     ilGetInteger(IL_IMAGE_FORMAT),
+//                     GL_UNSIGNED_BYTE,
+//                     ilGetData());
+//    }
+//    else
+//    {
+//        error = ilGetError();
+//        qDebug() << "error " << error;
+//        return 0;
+//    }
+
+//    //ilDeleteImages(1, &imageID);
+//    //qDebug() << "OK " << textureID;
+//    return textureID;
 }
