@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 LIBS += -lopengl32
-QT       += core gui opengl
+QT   += core gui opengl
 
 CONFIG += c++11
 
@@ -28,7 +28,8 @@ SOURCES += main.cpp\
     Nodes/playernode.cpp \
     Nodes/exitnode.cpp \
     Handlers/collisionhandler.cpp \
-    Nodes/skybox.cpp
+    Nodes/skybox.cpp \
+    GL/texturecache.cpp
 
 HEADERS  += \
     Generators/cavegenerator.h \
@@ -46,6 +47,7 @@ HEADERS  += \
     globals.h \
     Nodes/exitnode.h \
     Handlers/collisionhandler.h \
-    Nodes/skybox.h
+    Nodes/skybox.h \
+    GL/texturecache.h
 
 FORMS    +=

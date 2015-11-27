@@ -34,8 +34,6 @@ void SceneCamera::advance(int64_t msec)
     m_eye += m_front * dFront;
     m_eye += left * dLeft;
     m_eye += m_up * dUp;
-
-    //qDebug() << m_eye.x() << m_eye.y() << m_eye.z() << left.x() << left.y() << left.z();
 }
 
 QSize SceneCamera::viewport() const

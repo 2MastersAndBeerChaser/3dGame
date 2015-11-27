@@ -3,14 +3,10 @@
 #include <qopengl.h>
 #include "glhelper.h"
 #include <QPainter>
+#include <QDebug>
 
-#define ILUT_USE_OPENGL
-#include <IL/il.h>
-#include <IL/ilu.h>
-#include <IL/ilut.h>
-
-static float Z_NEAR = 0.02f;
-static float Z_FAR = 1000.0;
+static float Z_NEAR = 0.01f;
+static float Z_FAR = 100.0;
 
 BaseScene::BaseScene(QSize viewportSize)
     : SceneNode()
@@ -19,11 +15,6 @@ BaseScene::BaseScene(QSize viewportSize)
     , m_player(nullptr)
     , m_exit(nullptr)
 {
-    ilutRenderer(ILUT_OPENGL);
-    ilInit();
-    iluInit();
-    ilutInit();
-    ilutRenderer(ILUT_OPENGL);
 }
 
 BaseScene::~BaseScene()
@@ -72,7 +63,6 @@ void BaseScene::render(QPainter &painter)
     (void)painter;
     glClearColor(m_clearColor.redF(), m_clearColor.greenF(), m_clearColor.blueF(), m_clearColor.alphaF());
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-    glShadeModel(GL_FLAT);
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
