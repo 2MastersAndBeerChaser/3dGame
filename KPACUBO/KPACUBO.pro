@@ -3,7 +3,7 @@
 # Project created by QtCreator 2015-10-23T09:22:49
 #
 #-------------------------------------------------
-LIBS += -lopengl32
+LIBS += -lopengl32 -lSDL2 -lSDL_image
 QT       += core gui
 
 CONFIG += c++11

@@ -85,8 +85,7 @@ void BaseScene::render(QPainter &painter)
 
     GLfloat light0_diffuse[] = {0.5f, 0.5f, 0.5f, 1.0f};
     GLfloat light0_direction[] = {0.0f, 100.0f, 100.0f, 0.0f};
-    GLfloat light_ambient[] = {0.1f, 0.1f, 0.1f, 1.0f};
-    //glEnable(GL_LIGHT1);
+    GLfloat light_ambient[] = {0.2f, 0.1f, 0.1f, 1.0f};
     glLightfv (GL_LIGHT0, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
     glLightfv(GL_LIGHT0, GL_POSITION, light0_direction);
@@ -94,7 +93,6 @@ void BaseScene::render(QPainter &painter)
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-    //glDisable(GL_LIGHT0);
     GLHelper::dumpIfError();
 }
 
