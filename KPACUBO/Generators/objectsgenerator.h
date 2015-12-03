@@ -29,6 +29,7 @@ private:
     void GenTreasure();
     void GenEnemies();
     void GetFreeCells(Coord lt, Coord rb);
+	void FillBorders();
 
     std::vector<std::vector<int> > m_map;
     Orientation m_or;

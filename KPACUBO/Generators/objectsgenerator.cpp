@@ -12,8 +12,32 @@ std::vector<std::vector<int> > ObjectsGenerator::GenerateObj()
     GenEnterance();
     GenTreasure();
     GenExit();
+	FillBorders();
     GenEnemies();
     return m_map;
+}
+
+void ObjectsGenerator::FillBorders()
+{
+	for (int i = 0; i < MAP_SIZE; i++)
+	{
+		if (m_map[i][0] == FREE_CELL)
+		{
+			m_map[i][0] = WALL_CELL;
+		}
+		if (m_map[i][MAP_SIZE - 1] == FREE_CELL)
+		{
+			m_map[i][MAP_SIZE - 1] = WALL_CELL;
+		}
+		if (m_map[0][i] == FREE_CELL)
+		{
+			m_map[0][i] = WALL_CELL;
+		}
+		if (m_map[MAP_SIZE - 1][i] == FREE_CELL)
+		{
+			m_map[MAP_SIZE - 1][i] = WALL_CELL;
+		}
+	}
 }
 
 void ObjectsGenerator::GenEnterance()

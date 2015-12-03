@@ -63,17 +63,6 @@ void GameApplication::loadScene()
     CollisionHandler colHandler;
     colHandler.SetMap(m_map);
     colHandler.SetCoord(pos);
-//    std::vector<std::vector<int> > map2 = colHandler.GetMap();
-//    for (size_t i = 0; i < map2.size(); i++)
-//    {
-//        for (size_t j = 0; j < map2.size(); j++)
-//        {
-//            if (map2[i][j] == WALL_CELL)
-//            {
-//                new ColoredCube(scene.get(), {i, 0, j}, ColoredCube::WallType::RoomWall);
-//            }
-//        }
-//    }
     m_window.SetCollisionHandler(colHandler);
 
     m_window.pushScene(scene);
