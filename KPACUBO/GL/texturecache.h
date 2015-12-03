@@ -9,6 +9,7 @@ class TextureCache
 public:
     //new functions should pass to GetTexture pointer to static GLuint our_texture and path to texture
     static GLuint GetWallTexture();
+    static GLuint GetCaveGroundTexture();
 
 private:
     //Delete useless shit
@@ -22,6 +23,7 @@ private:
 
     //actual textures
     static GLuint m_wallTexture;
+    static GLuint m_caveGroundTexture;
 };
 
 #endif // TEXTURECACHE_H

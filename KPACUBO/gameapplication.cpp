@@ -27,7 +27,7 @@ void GameApplication::loadScene()
     std::shared_ptr<BaseScene> scene = std::make_shared<BaseScene>();
     scene->camera().setViewport(m_window.size());
 
-    new ColoredCube(scene.get(), {0, 0, 0}, ColoredCube::WallType::CaveGround);
+    //new ColoredCube(scene.get(), {0, 0, 0}, ColoredCube::WallType::CaveGround);
     new SkyBox(scene.get());
 
     int x = 0;
@@ -44,6 +44,7 @@ void GameApplication::loadScene()
             else if (m_map[i][j] == ENTERANCE_CELL)
             {
                 m_player = new PlayerNode(scene.get(), QVector2D(z, x));
+                new ColoredCube(scene.get(), {z, 0, x}, ColoredCube::WallType::CaveGround);
             }
             else if (m_map[i][j] == SIDE_EXIT_CELL)
             {
@@ -52,6 +53,10 @@ void GameApplication::loadScene()
             else if (m_map[i][j] == GROUND_EXIT_CELL)
             {
 
+            }
+            else if (m_map[i][j] == FREE_CELL)
+            {
+                new ColoredCube(scene.get(), {z, 0, x}, ColoredCube::WallType::CaveGround);
             }
         }
     }

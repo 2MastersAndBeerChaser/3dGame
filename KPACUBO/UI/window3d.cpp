@@ -107,8 +107,8 @@ void Window3D::render()
     }
     else
     {
-        glClearColor(1, 1, 1, 0);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+        //glClearColor(1, 1, 1, 0);
+        //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     }
 
     m_pContext->swapBuffers(this);

@@ -4,11 +4,18 @@
 #include <QDir>
 
 GLuint TextureCache::m_wallTexture = 0;
+GLuint TextureCache::m_caveGroundTexture = 0;
 
 GLuint TextureCache::GetWallTexture()
 {
     std::string s = QDir::currentPath().toStdString() + "/lava_texture.png";
-    return GetTexture(&m_wallTexture, s.c_str()); //-> сделать относительный путь
+    return GetTexture(&m_wallTexture, s.c_str());
+}
+
+GLuint TextureCache::GetCaveGroundTexture()
+{
+    std::string s = QDir::currentPath().toStdString() + "/ground.jpg";
+    return GetTexture(&m_caveGroundTexture, s.c_str());
 }
 
 GLuint TextureCache::GetTexture(GLuint *textureID, const char *textureName)

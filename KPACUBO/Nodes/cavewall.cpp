@@ -43,48 +43,74 @@ void ColoredCube::drawOpenGLCube()
     // Массив граней, а точнее, индексов составляющих их вершин.
     // Индексы вершин граней перечисляются в порядке их обхода
     // против часовой стрелки (если смотреть на грань снаружи)
-    const unsigned char faces[6][4] =
+    const unsigned char faces[5][4] =
     {
         {4, 7, 3, 0},	// грань x<0
         {5, 1, 2, 6},	// грань x>0
-        {4, 0, 1, 5},	// грань y<0
+        //{4, 0, 1, 5},	// грань y<0
         {7, 6, 2, 3},	// грань y>0
         {0, 3, 2, 1},	// грань z<0
         {4, 5, 6, 7},	// грань z>0
     };
 
+    if (m_isCaveGround)
+    {
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, TextureCache::GetCaveGroundTexture());
+        glBegin(GL_QUADS);
+
+        glTexCoord2f(0.0f, 0.0f); glVertex3f(x, y, z + m_len);
+        glTexCoord2f(1.0f, 0.0f); glVertex3f(x + m_len, y, z + m_len);
+        glTexCoord2f(1.0f, 1.0f); glVertex3f(x + m_len, y, z);
+        glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y, z);
+
+        glEnd();
+
+        glDisable(GL_TEXTURE_2D);
+
+        return;
+    }
+
     if (m_isWall)
     {
-        const TexCoordVertex texCoords[24] = {
-            {1.0f, 0.0f},
+        const TexCoordVertex texCoords[8] = {
             {1.0f, 1.0f},
             {0.0f, 1.0f},
             {0.0f, 0.0f},
-
-            {0.0f, 0.0f},
             {1.0f, 0.0f},
-            {1.0f, 1.0f},
-            {0.0f, 1.0f},
-
-            {1.0f, 0.0f},
-            {1.0f, 1.0f},
-            {0.0f, 1.0f},
-            {0.0f, 0.0f},
-
-            {0.0f, 0.0f},
-            {1.0f, 0.0f},
-            {1.0f, 1.0f},
-            {0.0f, 1.0f},
-
-            {1.0f, 0.0f},
-            {1.0f, 1.0f},
-            {0.0f, 1.0f},
-            {0.0f, 0.0f},
-
             {0.0f, 0.0f},
             {1.0f, 0.0f},
             {1.0f, 1.0f},
             {0.0f, 1.0f}
+//            {1.0f, 0.0f},
+//            {1.0f, 1.0f},
+//            {0.0f, 1.0f},
+//            {0.0f, 0.0f},
+
+//            {0.0f, 0.0f},
+//            {1.0f, 0.0f},
+//            {1.0f, 1.0f},
+//            {0.0f, 1.0f},
+
+//            {1.0f, 0.0f},
+//            {1.0f, 1.0f},
+//            {0.0f, 1.0f},
+//            {0.0f, 0.0f},
+
+//            {0.0f, 0.0f},
+//            {1.0f, 0.0f},
+//            {1.0f, 1.0f},
+//            {0.0f, 1.0f},
+
+//            {1.0f, 0.0f},
+//            {1.0f, 1.0f},
+//            {0.0f, 1.0f},
+//            {0.0f, 0.0f},
+
+//            {0.0f, 0.0f},
+//            {1.0f, 0.0f},
+//            {1.0f, 1.0f},
+//            {0.0f, 1.0f}
         };
 
         glEnable(GL_TEXTURE_2D);
@@ -97,7 +123,7 @@ void ColoredCube::drawOpenGLCube()
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-        glDrawElements(GL_QUADS, 24, GL_UNSIGNED_BYTE, faces);
+        glDrawElements(GL_QUADS, 20, GL_UNSIGNED_BYTE, faces);
 
         glDisableClientState(GL_VERTEX_ARRAY);
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -160,15 +186,15 @@ ColoredCube::ColoredCube(SceneNode *parent, Vec3 coord, WallType wallType)
     : SceneNode(parent),
       m_coord(coord),
       m_len(WALL_LEN),
-      m_isWall(false)
+      m_isWall(false),
+      m_isCaveGround(false)
 {
     switch (wallType)
     {
     case WallType::CaveGround:
         m_color = {128, 128, 128, 255};
         m_height = 0;
-        m_len = MAP_SIZE * WALL_LEN;
-
+        m_isCaveGround = true;
         break;
     case WallType::CaveWall:
         m_color = {128, 5, 5, 255};
@@ -186,7 +212,6 @@ ColoredCube::ColoredCube(SceneNode *parent, Vec3 coord, WallType wallType)
     default:
         break;
     }
-
 }
 
 void ColoredCube::advance(int64_t msec)

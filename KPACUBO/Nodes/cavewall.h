@@ -42,10 +42,7 @@ public:
     void advance(int64_t msec) override;
     void render(QPainter &painter) override;
 private:
-    //GLuint CreateTexture();
-
-    //static GLuint m_caveWallTexture;
-    bool m_isWall;
+    bool m_isWall, m_isCaveGround;
     Vec3 m_coord;
     Color4 m_color;
     int m_height;
